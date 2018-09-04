@@ -1,22 +1,17 @@
-const makeStorageMock = function () {
+const localStorageMock = (function() {
   let store = {};
   return {
     store,
-    getItem(key) {
+    getItem: function(key) {
       return store[key];
     },
-    setItem(key, value) {
+    setItem: function(key, value) {
       store[key] = value;
     },
-    clear() {
+    clear: function() {
       store = {};
     }
   };
-};
-
-const localStorageMock = makeStorageMock();
-const sessionStorageMock = makeStorageMock();
-
+})();
+Object.defineProperty(window, 'Storage', { value: localStorageMock });
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
-
