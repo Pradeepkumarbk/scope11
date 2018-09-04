@@ -470,7 +470,7 @@ func TestRegistryDelete(t *testing.T) {
 	setupStubs(mdc, func() {
 		registry := testRegistry()
 		defer registry.Stop()
- 		time.Sleep(time.Millisecond * 100) // Allow for goroutines to get started 
+		time.Sleep(time.Millisecond * 100) // Allow for goroutines to get started
 
 		// Collect all the events.
 		mtx := sync.Mutex{}
