@@ -63,9 +63,6 @@ jobs:
     steps:
       - checkout
       # Convoluted set of steps here to mimic Makefile actions of bind-mounting different dirs into container
-      - run: npm install --save-dev jest
-      - run: npm install --save-dev babel-core
-      - run: npm install
       - run: mv client/app /home/weave/
       - run: cd /home/weave; mkdir build         ; yarn run build         ; mv build          scope/client
       - run: cd /home/weave; mkdir build-external; yarn run build-external; mv build-external scope/client
@@ -82,6 +79,7 @@ jobs:
     steps:
       - checkout
       - run: |
+          npm install
           mv client/app client/test /home/weave/
           cd /home/weave; yarn run lint
           cd /home/weave; yarn test
