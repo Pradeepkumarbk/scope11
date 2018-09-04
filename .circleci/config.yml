@@ -79,6 +79,7 @@ jobs:
     steps:
       - checkout
       - run: |
+          npm install
           mv client/app client/test /home/weave/
           cd /home/weave; yarn run lint
           cd /home/weave; yarn test
