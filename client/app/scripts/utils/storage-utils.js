@@ -2,54 +2,30 @@ import debug from 'debug';
 
 const log = debug('scope:storage-utils');
 
-export const localSessionStorage = {
-  getItem(k) {
-    return window.sessionStorage.getItem(k) || window.localStorage.getItem(k);
-  },
-  setItem(k, v) {
-    window.sessionStorage.setItem(k, v);
-    window.localStorage.setItem(k, v);
-  },
-  clear() {
-    window.sessionStorage.clear();
-    window.localStorage.clear();
-  }
-};
+// localStorage detection
+const storage = (typeof Storage) !== 'undefined' ? window.localStorage : null;
 
-export function storageGet(key, defaultValue, storage = localSessionStorage) {
-  if (!storage) {
-    return defaultValue;
+export function storageGet(key, defaultValue) {
+  if (storage && storage.getItem(key) !== undefined) {
+    return storage.getItem(key);
   }
-
-  const value = storage.getItem(key);
-  if (value == null) {
-    return defaultValue;
-  }
-
-  return value;
+  return defaultValue;
 }
 
-export function storageSet(key, value, storage = localSessionStorage) {
+export function storageSet(key, value) {
   if (storage) {
     try {
       storage.setItem(key, value);
       return true;
     } catch (e) {
-      log(
-        'Error storing value in storage. Maybe full? Could not store key.',
-        key
-      );
+      log('Error storing value in storage. Maybe full? Could not store key.', key);
     }
   }
   return false;
 }
 
-export function storageGetObject(
-  key,
-  defaultValue,
-  storage = localSessionStorage
-) {
-  const value = storageGet(key, undefined, storage);
+export function storageGetObject(key, defaultValue) {
+  const value = storageGet(key);
   if (value) {
     try {
       return JSON.parse(value);
@@ -60,12 +36,11 @@ export function storageGetObject(
   return defaultValue;
 }
 
-export function storageSetObject(key, obj, storage = localSessionStorage) {
+export function storageSetObject(key, obj) {
   try {
-    return storageSet(key, JSON.stringify(obj), storage);
+    return storageSet(key, JSON.stringify(obj));
   } catch (e) {
     log('Error encoding object for key', key);
   }
   return false;
 }
-
