@@ -37,7 +37,7 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: master
+              only: test22
           requires:
             - client-test
             - integration-tests
