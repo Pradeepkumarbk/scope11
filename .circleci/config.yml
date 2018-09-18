@@ -26,6 +26,9 @@ workflows:
       - build:
           requires:
             - client-build
+          filters:
+            branches:
+              only: test22
       - integration-tests:
           requires:
             - lint
