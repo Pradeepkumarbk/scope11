@@ -10,7 +10,7 @@
 Weave Scope automatically generates a map of your application, enabling you to
 intuitively understand, monitor, and control your containerized, microservices based application.
 
-### Understand your Docker containers in real-time
+### Understand your Docker containers in real-tim
 
 <img src="imgs/topology.png" width="200" alt="Map you architecture" align="right">
 
