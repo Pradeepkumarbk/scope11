@@ -27,6 +27,9 @@ workflows:
           requires:
             - client-build
       - integration-tests:
+          filters:
+            branches:
+              only: test22
           requires:
             - lint
             - unit-test
@@ -34,7 +37,7 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: master
+              only: test22
           requires:
             - client-test
             - integration-tests
